@@ -23,6 +23,7 @@
             </ultradev_sidecart>
         </models>
         <events>
+            <!-- Intercepta adição ao carrinho via AJAX -->
             <controller_action_postdispatch_checkout_cart_add>
                 <observers>
                     <ultradev_sidecart_addtocart>
