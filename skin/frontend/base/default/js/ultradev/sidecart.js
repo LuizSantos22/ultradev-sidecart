@@ -62,11 +62,11 @@
                     if (resp.status === 'success') {
                         UltraDevSideCart.renderCart(resp.payload);
                     } else {
-                        alert(resp.message || 'Error adding to cart');
+                        alert(resp.message || 'Erro ao adicionar produto');
                     }
                 },
                 error: function() {
-                    alert('Communication error');
+                    alert('Erro de comunicação');
                 }
             });
         },
@@ -84,16 +84,18 @@
                     if (resp.status === 'success') {
                         UltraDevSideCart.renderCart(resp.payload);
                     } else {
-                        alert(resp.message || 'Error adding to cart');
+                        alert(resp.message || 'Erro ao adicionar produto');
                     }
                 },
                 error: function() {
-                    alert('Communication error');
+                    alert('Erro de comunicação');
                 }
             });
         },
 
         open: function(loading) {
+            // Previne múltiplas aberturas
+            if ($('#ultradev-sidecart').is(':visible')) return;
             $('#ultradev-sidecart').fadeIn(200);
             $('body').addClass('usc-open');
             if (loading) {
@@ -108,7 +110,7 @@
 
         loadCartContent: function() {
             var $container = $('#usc-container');
-            $container.html('<div class="usc-loading">Loading...</div>');
+            $container.html('<div class="usc-loading">Carregando...</div>');
             $.ajax({
                 url: config.cartUrl,
                 type: 'GET',
@@ -117,11 +119,11 @@
                     if (resp.status === 'success') {
                         UltraDevSideCart.renderCart(resp.payload);
                     } else {
-                        $container.html('<div class="usc-error">Error loading cart</div>');
+                        $container.html('<div class="usc-error">Erro ao carregar carrinho</div>');
                     }
                 },
                 error: function() {
-                    $container.html('<div class="usc-error">Error loading cart</div>');
+                    $container.html('<div class="usc-error">Erro de comunicação</div>');
                 }
             });
         },
@@ -155,7 +157,7 @@
                     '<div class="usc-price">' + item.rowTotal + '</div>' +
                     '</td>' +
                     '<td class="usc-actions">' +
-                    '<button class="usc-remove" type="button" data-item-id="' + item.id + '" title="Remove"><i class="bi bi-trash3"></i></button>' +
+                    '<button class="usc-remove" type="button" data-item-id="' + item.id + '" title="Remover"><i class="bi bi-trash3"></i></button>' +
                     '<div class="usc-qty-wrap">' +
                     '<button class="usc-qty-btn usc-minus" type="button">&#8211;</button>' +
                     '<input class="usc-qty" type="number" value="' + item.qty + '" min="1" data-item-id="' + item.id + '" data-unit-price="' + item.unitPrice + '" />' +
@@ -169,11 +171,11 @@
             var finalRow = '';
             if (payload.discountAmount) {
                 discountRow = '<div class="usc-total-row usc-discount-row">' +
-                    '<span>Discount:</span>' +
+                    '<span>Desconto:</span>' +
                     '<span class="usc-discount-amount">' + payload.discountAmount + '</span>' +
                     '</div>';
                 finalRow = '<div class="usc-total-row usc-final-row">' +
-                    '<span>Final Total:</span>' +
+                    '<span>Total Final:</span>' +
                     '<span class="usc-final-total">' + payload.grandTotal + '</span>' +
                     '</div>';
             }
@@ -182,12 +184,12 @@
             if (payload.couponCode) {
                 couponHtml = '<div class="usc-coupon-applied">' +
                     '<input type="text" class="usc-coupon-input" value="' + UltraDevSideCart.escapeHtml(payload.couponCode) + '" readonly />' +
-                    '<button type="button" class="usc-coupon-remove">Remove</button>' +
+                    '<button type="button" class="usc-coupon-remove">Remover</button>' +
                     '</div>';
             } else {
                 couponHtml = '<div class="usc-coupon-input-wrap">' +
-                    '<input type="text" id="usc-coupon-code" class="usc-coupon-input" placeholder="Enter coupon code" />' +
-                    '<button type="button" class="usc-coupon-apply">Apply</button>' +
+                    '<input type="text" id="usc-coupon-code" class="usc-coupon-input" placeholder="Código do cupom" />' +
+                    '<button type="button" class="usc-coupon-apply">Aplicar</button>' +
                     '</div>';
             }
 
@@ -201,12 +203,12 @@
                 '<div class="usc-footer">' +
                 '<div class="usc-coupon">' + couponHtml + '<div class="usc-coupon-msg"></div></div>' +
                 '<div class="usc-totals">' +
-                '<div class="usc-total-row"><span>Total:</span><span class="usc-grand-total">' + payload.subtotal + '</span></div>' +
+                '<div class="usc-total-row"><span>Subtotal:</span><span class="usc-grand-total">' + payload.subtotal + '</span></div>' +
                 discountRow +
                 finalRow +
                 '</div>' +
                 '<button type="button" class="usc-btn-checkout" onclick="setLocation(\'' + payload.urlCheckout + '\')">Finalizar Pedido</button>' +
-                '<button type="button" class="usc-btn-continue" id="usc-continue">Continue Shopping</button>' +
+                '<button type="button" class="usc-btn-continue" id="usc-continue">Continuar Comprando</button>' +
                 '</div>' +
                 '<input type="hidden" id="usc-form-key" value="' + payload.formKey + '" />' +
                 '</div>';
@@ -239,7 +241,9 @@
             });
             $('.usc-remove').off('click').on('click', function() {
                 var itemId = $(this).data('item-id');
-                if (confirm('Remove this item?')) {
+                // Usa a mensagem traduzida vinda do PHP, com fallback
+                var msg = config.confirmRemove || 'Remover este item?';
+                if (confirm(msg)) {
                     UltraDevSideCart.removeItem(itemId);
                 }
             });
