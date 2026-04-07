@@ -1,1 +1,7 @@
 
+app/code/community/UltraDev/SideCart           app/code/community/UltraDev/SideCart
+app/design/frontend/base/default/layout/ultradev_sidecart.xml   app/design/frontend/base/default/layout/ultradev_sidecart.xml
+app/design/frontend/base/default/template/ultradev/sidecart     app/design/frontend/base/default/template/ultradev/sidecart
+app/etc/modules/UltraDev_SideCart.xml        app/etc/modules/UltraDev_SideCart.xml
+skin/frontend/base/default/css/ultradev      skin/frontend/base/default/css/ultradev
+skin/frontend/base/default/js/ultradev       skin/frontend/base/default/js/ultradev
