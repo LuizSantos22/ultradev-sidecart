@@ -25,6 +25,7 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </enabled>
+
                         <cart_selector translate="label comment">
                             <label>Cart Link Selector (jQuery)</label>
                             <comment><![CDATA[CSS selector for the cart link. Default: .top-link-cart]]></comment>
@@ -33,7 +34,9 @@
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
+                            <default_value>.top-link-cart</default_value>
                         </cart_selector>
+
                         <addtocart_selector translate="label comment">
                             <label>Add to Cart Button Selector (jQuery)</label>
                             <comment><![CDATA[CSS selector for add-to-cart buttons. Default: .btn-cart, .actions .btn-cart]]></comment>
@@ -42,6 +45,7 @@
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
+                            <default_value>.btn-cart, .actions .btn-cart</default_value>
                         </addtocart_selector>
                     </fields>
                 </general>
