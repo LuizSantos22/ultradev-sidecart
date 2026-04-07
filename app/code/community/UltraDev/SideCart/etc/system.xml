@@ -25,18 +25,18 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </enabled>
-                        <cart_selector translate="label">
+                        <cart_selector translate="label comment">
                             <label>Cart Link Selector (jQuery)</label>
-                            <comment>Ex: .top-link-cart, .header-minicart .cart-link</comment>
+                            <comment><![CDATA[CSS selector for the cart link. Default: .top-link-cart]]></comment>
                             <frontend_type>text</frontend_type>
                             <sort_order>20</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </cart_selector>
-                        <addtocart_selector translate="label">
+                        <addtocart_selector translate="label comment">
                             <label>Add to Cart Button Selector (jQuery)</label>
-                            <comment>Ex: .btn-cart, .actions .btn-cart</comment>
+                            <comment><![CDATA[CSS selector for add-to-cart buttons. Default: .btn-cart, .actions .btn-cart]]></comment>
                             <frontend_type>text</frontend_type>
                             <sort_order>30</sort_order>
                             <show_in_default>1</show_in_default>
