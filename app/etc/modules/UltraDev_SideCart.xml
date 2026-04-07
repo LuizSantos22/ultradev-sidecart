@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <UltraDev_SideCart>
+            <active>true</active>
+            <codePool>community</codePool>
+            <depends>
+                <!-- Nenhuma dependência obrigatória, mas o módulo precisa do jQuery (já presente no tema Ultimo) -->
+            </depends>
+        </UltraDev_SideCart>
+    </modules>
+</config>
