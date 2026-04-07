@@ -32,6 +32,9 @@ class UltraDev_SideCart_Block_Cart extends Mage_Core_Block_Template
         return Mage::helper('checkout')->formatPrice($price);
     }
 
+    /**
+     * Retorna opções customizadas do produto (atributos configuráveis, opções de produto)
+     */
     public function getItemOptions($item)
     {
         $options = [];
