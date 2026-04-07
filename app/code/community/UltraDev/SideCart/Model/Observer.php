@@ -1,6 +1,9 @@
 <?php
 class UltraDev_SideCart_Model_Observer
 {
+    /**
+     * Intercepta o add to cart via AJAX e retorna o payload JSON
+     */
     public function postDispatchAddToCart(Varien_Event_Observer $event)
     {
         /** @var Mage_Core_Controller_Varien_Action $action */
@@ -37,6 +40,9 @@ class UltraDev_SideCart_Model_Observer
         exit;
     }
 
+    /**
+     * Constrói o payload completo do carrinho (itens, totais, URLs, etc.)
+     */
     protected function _buildCartPayload()
     {
         $quote    = Mage::getSingleton('checkout/session')->getQuote();
@@ -99,6 +105,9 @@ class UltraDev_SideCart_Model_Observer
         ];
     }
 
+    /**
+     * Método estático para ser usado pelos controllers
+     */
     public static function buildCartPayload()
     {
         return (new self)->_buildCartPayload();
