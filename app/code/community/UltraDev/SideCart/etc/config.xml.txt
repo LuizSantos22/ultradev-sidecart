@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <UltraDev_SideCart>
+            <version>1.0.0</version>
+        </UltraDev_SideCart>
+    </modules>
+
+    <global>
+        <blocks>
+            <ultradev_sidecart>
+                <class>UltraDev_SideCart_Block</class>
+            </ultradev_sidecart>
+        </blocks>
+        <helpers>
+            <ultradev_sidecart>
+                <class>UltraDev_SideCart_Helper</class>
+            </ultradev_sidecart>
+        </helpers>
+        <models>
+            <ultradev_sidecart>
+                <class>UltraDev_SideCart_Model</class>
+            </ultradev_sidecart>
+        </models>
+        <events>
+            <controller_action_postdispatch_checkout_cart_add>
+                <observers>
+                    <ultradev_sidecart_addtocart>
+                        <type>singleton</type>
+                        <class>UltraDev_SideCart_Model_Observer</class>
+                        <method>postDispatchAddToCart</method>
+                    </ultradev_sidecart_addtocart>
+                </observers>
+            </controller_action_postdispatch_checkout_cart_add>
+        </events>
+    </global>
+
+    <frontend>
+        <routers>
+            <ultradev_sidecart>
+                <use>standard</use>
+                <args>
+                    <module>UltraDev_SideCart</module>
+                    <frontName>ultradev_sidecart</frontName>
+                </args>
+            </ultradev_sidecart>
+        </routers>
+        <layout>
+            <updates>
+                <ultradev_sidecart>
+                    <file>ultradev_sidecart.xml</file>
+                </ultradev_sidecart>
+            </updates>
+        </layout>
+    </frontend>
+</config>

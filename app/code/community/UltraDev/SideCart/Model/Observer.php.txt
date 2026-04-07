@@ -1,0 +1,106 @@
+<?php
+class UltraDev_SideCart_Model_Observer
+{
+    public function postDispatchAddToCart(Varien_Event_Observer $event)
+    {
+        /** @var Mage_Core_Controller_Varien_Action $action */
+        $action = $event->getControllerAction();
+        $request = $action->getRequest();
+
+        if (!$request->isXmlHttpRequest()) {
+            return;
+        }
+
+        $checkout = Mage::getSingleton('checkout/session');
+        $messages = $checkout->getMessages(true);
+        $errors   = $messages->getItems(Mage_Core_Model_Message::ERROR);
+        $hasError = count($errors) > 0;
+
+        $response = [
+            'status'  => $hasError ? 'error' : 'success',
+            'qty'     => (int) $checkout->getQuote()->getItemsQty(),
+            'payload' => $hasError ? null : $this->_buildCartPayload(),
+        ];
+
+        if ($hasError) {
+            $response['message'] = implode(' ', array_map(function($m) {
+                return $m->getText();
+            }, $errors));
+        }
+
+        $action->getResponse()
+            ->clearHeaders()
+            ->setHeader('Content-Type', 'application/json', true)
+            ->setBody(Mage::helper('core')->jsonEncode($response));
+
+        $action->getResponse()->sendResponse();
+        exit;
+    }
+
+    protected function _buildCartPayload()
+    {
+        $quote    = Mage::getSingleton('checkout/session')->getQuote();
+        $helper   = Mage::helper('checkout');
+        $discount = $quote->getSubtotal() - $quote->getSubtotalWithDiscount();
+        $items    = [];
+
+        foreach ($quote->getAllVisibleItems() as $item) {
+            $product  = $item->getProduct();
+            $options  = [];
+            $typeInst = $product->getTypeInstance(true);
+            $orderOpt = $typeInst->getOrderOptions($product);
+
+            if (!empty($orderOpt['attributes_info'])) {
+                foreach ($orderOpt['attributes_info'] as $opt) {
+                    $options[] = ['label' => $opt['label'], 'value' => $opt['value']];
+                }
+            }
+            if (!empty($orderOpt['options'])) {
+                foreach ($orderOpt['options'] as $opt) {
+                    $val = is_array($opt['value']) ? implode(', ', $opt['value']) : $opt['value'];
+                    $options[] = ['label' => $opt['label'], 'value' => $val];
+                }
+            }
+
+            $thumb = '';
+            try {
+                $thumb = (string) Mage::helper('catalog/image')
+                    ->init($product, 'thumbnail')
+                    ->resize(75, 75);
+            } catch (Exception $e) {}
+
+            $items[] = [
+                'id'        => (int) $item->getId(),
+                'name'      => $product->getName(),
+                'url'       => $product->getProductUrl(),
+                'thumb'     => $thumb,
+                'qty'       => (int) $item->getQty(),
+                'unitPrice' => (float) $product->getFinalPrice(),
+                'rowTotal'  => $helper->formatPrice($item->getRowTotal()),
+                'options'   => $options,
+            ];
+        }
+
+        return [
+            'items'          => $items,
+            'itemCount'      => count($items),
+            'qty'            => (int) $quote->getItemsQty(),
+            'subtotal'       => $helper->formatPrice($quote->getSubtotal()),
+            'grandTotal'     => $helper->formatPrice($quote->getGrandTotal()),
+            'discountAmount' => $discount > 0.001 ? $helper->formatPrice(-$discount) : '',
+            'couponCode'     => (string) $quote->getCouponCode(),
+            'formKey'        => Mage::getSingleton('core/session')->getFormKey(),
+            'urlUpdateItem'  => Mage::getUrl('ultradev_sidecart/cart/updateItem'),
+            'urlRemoveItem'  => Mage::getUrl('ultradev_sidecart/cart/removeItem'),
+            'urlApplyCoupon' => Mage::getUrl('ultradev_sidecart/cart/applyCoupon'),
+            'urlRemoveCoupon'=> Mage::getUrl('ultradev_sidecart/cart/removeCoupon'),
+            'urlCheckout'    => Mage::getUrl('checkout/onepage'),
+            'urlCart'        => Mage::getUrl('checkout/cart'),
+        ];
+    }
+
+    public static function buildCartPayload()
+    {
+        return (new self)->_buildCartPayload();
+    }
+}

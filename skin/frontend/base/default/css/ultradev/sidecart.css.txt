@@ -1,0 +1,177 @@
+.usc-sidecart {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    display: none;
+}
+.usc-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+}
+.usc-container {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 380px;
+    height: 100%;
+    background: #fff;
+    box-shadow: -2px 0 10px rgba(0,0,0,0.2);
+    overflow-y: auto;
+    padding: 20px;
+    box-sizing: border-box;
+}
+body.usc-open {
+    overflow: hidden;
+}
+.usc-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+}
+.usc-title {
+    font-size: 1.2rem;
+}
+.usc-close, .usc-edit {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+.usc-items {
+    max-height: calc(100% - 200px);
+    overflow-y: auto;
+}
+.usc-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.usc-row {
+    border-bottom: 1px solid #eee;
+}
+.usc-thumb {
+    width: 75px;
+    padding: 10px 5px;
+}
+.usc-details {
+    padding: 10px 5px;
+}
+.usc-name a {
+    font-weight: bold;
+    text-decoration: none;
+}
+.usc-options {
+    font-size: 0.8rem;
+    color: #666;
+    margin-top: 5px;
+}
+.usc-price {
+    margin-top: 8px;
+    font-weight: bold;
+}
+.usc-actions {
+    text-align: right;
+    vertical-align: middle;
+}
+.usc-remove {
+    background: none;
+    border: none;
+    color: #c00;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+.usc-qty-wrap {
+    display: inline-flex;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    overflow: hidden;
+}
+.usc-qty-btn {
+    background: #f0f0f0;
+    border: none;
+    width: 30px;
+    cursor: pointer;
+}
+.usc-qty {
+    width: 40px;
+    text-align: center;
+    border: none;
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+}
+.usc-footer {
+    margin-top: 20px;
+    border-top: 1px solid #ddd;
+    padding-top: 15px;
+}
+.usc-coupon-input-wrap, .usc-coupon-applied {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+.usc-coupon-input {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+.usc-coupon-apply, .usc-coupon-remove {
+    background: #333;
+    color: #fff;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.usc-coupon-msg {
+    color: green;
+    font-size: 0.8rem;
+    display: none;
+}
+.usc-totals {
+    background: #f9f9f9;
+    padding: 10px;
+    border-radius: 6px;
+    margin: 15px 0;
+}
+.usc-total-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+.usc-discount-row {
+    color: #c00;
+}
+.usc-final-row {
+    font-weight: bold;
+    border-top: 1px solid #ddd;
+    padding-top: 8px;
+    margin-top: 8px;
+}
+.usc-btn-checkout, .usc-btn-continue {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 10px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+}
+.usc-btn-checkout {
+    background: #28a745;
+    color: #fff;
+}
+.usc-btn-continue {
+    background: #fff;
+    border: 1px solid #2c85c8;
+    color: #2c85c8;
+}
