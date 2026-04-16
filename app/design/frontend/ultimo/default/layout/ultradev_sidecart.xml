@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<layout version="1.0.0">
+    <default>
+        <reference name="head">
+            <action method="addCss"><stylesheet>css/ultradev/sidecart.css</stylesheet></action>
+            <action method="addItem">
+                <type>skin_js</type>
+                <name>js/ultradev/sidecart.js</name>
+            </action>
+        </reference>
+        <reference name="before_body_end">
+            <block type="ultradev_sidecart/cart"
+                   name="ultradev.sidecart.init"
+                   template="ultradev/sidecart/init.phtml" />
+        </reference>
+    </default>
+</layout>
