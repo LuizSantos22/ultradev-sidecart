@@ -15,7 +15,7 @@ class UltraDev_SideCart_CartController extends Mage_Core_Controller_Front_Action
     }
 
     /**
-     * Retorna o payload JSON do carrinho (usado pelo JS ao abrir)
+     * Returns the JSON payload of the cart (used by JS when opening)
      */
     public function indexAction()
     {
@@ -26,8 +26,8 @@ class UltraDev_SideCart_CartController extends Mage_Core_Controller_Front_Action
     }
 
     /**
-     * Adiciona um produto ao carrinho via AJAX e retorna o payload do carrinho
-     * (sem validação de form_key para evitar erros em temas/customizações)
+     * Adds a product to the cart via AJAX and returns the cart payload
+     * (without form_key validation to avoid errors in themes/customizations)
      */
     public function addAction()
     {
@@ -36,7 +36,7 @@ class UltraDev_SideCart_CartController extends Mage_Core_Controller_Front_Action
             return;
         }
 
-        // REMOVA ou comente a validação do form_key para este método específico
+        // REMOVE or comment out the form_key validation for this specific method
         // if (!$this->_validateFormKey()) {
         //     return $this->_sendJson(['status' => 'error', 'message' => $this->__('Invalid form key.')]);
         // }
@@ -49,7 +49,7 @@ class UltraDev_SideCart_CartController extends Mage_Core_Controller_Front_Action
                 $params['product'] = $params['product_id'];
             }
             if (empty($params['product'])) {
-                throw new Exception('Produto não informado.');
+                throw new Exception('Product not specified.');
             }
 
             $cart->addProduct($params['product'], $params);
@@ -67,13 +67,13 @@ class UltraDev_SideCart_CartController extends Mage_Core_Controller_Front_Action
             Mage::logException($e);
             $this->_sendJson([
                 'status'  => 'error',
-                'message' => $this->__('Erro ao adicionar produto: ') . $e->getMessage()
+                'message' => $this->__('Error adding product: ') . $e->getMessage()
             ]);
         }
     }
 
     /**
-     * Atualiza a quantidade de um item
+     * Updates the quantity of an item
      */
     public function updateItemAction()
     {
@@ -112,7 +112,7 @@ class UltraDev_SideCart_CartController extends Mage_Core_Controller_Front_Action
     }
 
     /**
-     * Remove um item do carrinho
+     * Removes an item from the cart
      */
     public function removeItemAction()
     {
@@ -150,7 +150,7 @@ class UltraDev_SideCart_CartController extends Mage_Core_Controller_Front_Action
     }
 
     /**
-     * Aplica cupom de desconto
+     * Applies a discount coupon
      */
     public function applyCouponAction()
     {
@@ -194,7 +194,7 @@ class UltraDev_SideCart_CartController extends Mage_Core_Controller_Front_Action
     }
 
     /**
-     * Remove cupom de desconto
+     * Removes a discount coupon
      */
     public function removeCouponAction()
     {
