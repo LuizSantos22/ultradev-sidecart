@@ -1,38 +1,24 @@
 <?php
-/** @var UltraDev_SideCart_Block_Cart $this */
 $helper = Mage::helper('ultradev_sidecart');
 if (!$helper->isEnabled()) return;
+$jsFile = Mage::getBaseDir('skin') . DS . 'frontend' . DS . 'ultimo' . DS . 'default' . DS . 'js' . DS . 'ultradev' . DS . 'sidecart.js';
+$jsContent = file_exists($jsFile) ? file_get_contents($jsFile) : '';
 ?>
-<div id="ultradev-sidecart" class="usc-sidecart" style="display:none;">
-    <div class="usc-overlay" id="usc-overlay"></div>
-    <div class="usc-container" id="usc-container">
+<div id="usc-overlay"></div>
+<div id="usc-panel">
+    <div id="usc-panel-inner">
         <div class="usc-loading"><?php echo $this->__('Loading...') ?></div>
     </div>
 </div>
-
-<script type="text/template" id="usc-empty-template">
-    <div class="usc-cart usc-cart--empty">
-        <div class="usc-header">
-            <button class="usc-close" id="usc-close" type="button"><i class="bi bi-arrow-right"></i></button>
-            <div class="usc-title"><strong>MEU</strong> CARRINHO</div>
-            <span></span>
-        </div>
-        <div class="usc-empty-msg">
-            <p><?php echo $this->__('Your cart is empty.') ?></p>
-            <a href="<?php echo $this->getUrl() ?>"><?php echo $this->__('Continue Shopping') ?></a>
-        </div>
-    </div>
+<script type="text/javascript" data-cfasync="false">
+<?php echo $jsContent ?>
 </script>
 
-<script type="text/javascript">
-    window.UltraDevSideCartConfig = {
-        cartUrl: '<?php echo Mage::getUrl('ultradev_sidecart/cart/index') ?>',
-        addToCartSelector: '<?php echo $helper->getAddToCartSelector() ?>',
-        cartLinkSelector: '<?php echo $helper->getCartSelector() ?>',
-        updateItemUrl: '<?php echo Mage::getUrl('ultradev_sidecart/cart/updateItem') ?>',
-        removeItemUrl: '<?php echo Mage::getUrl('ultradev_sidecart/cart/removeItem') ?>',
-        applyCouponUrl: '<?php echo Mage::getUrl('ultradev_sidecart/cart/applyCoupon') ?>',
-        removeCouponUrl: '<?php echo Mage::getUrl('ultradev_sidecart/cart/removeCoupon') ?>',
-        confirmRemove: '<?php echo $this->__('Remove this item?') ?>'
-    };
-</script>
+<style type="text/css">
+    #mini-cart .mini-cart-content {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
+    }
+</style>
