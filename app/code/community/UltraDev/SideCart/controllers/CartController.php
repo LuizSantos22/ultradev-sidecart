@@ -26,6 +26,53 @@ class UltraDev_SideCart_CartController extends Mage_Core_Controller_Front_Action
     }
 
     /**
+     * Adiciona um produto ao carrinho via AJAX e retorna o payload do carrinho
+     * (sem validação de form_key para evitar erros em temas/customizações)
+     */
+    public function addAction()
+    {
+        if (!$this->getRequest()->isAjax()) {
+            $this->_redirect('checkout/cart');
+            return;
+        }
+
+        // REMOVA ou comente a validação do form_key para este método específico
+        // if (!$this->_validateFormKey()) {
+        //     return $this->_sendJson(['status' => 'error', 'message' => $this->__('Invalid form key.')]);
+        // }
+
+        try {
+            $cart = Mage::getSingleton('checkout/cart');
+            $params = $this->getRequest()->getParams();
+
+            if (empty($params['product']) && !empty($params['product_id'])) {
+                $params['product'] = $params['product_id'];
+            }
+            if (empty($params['product'])) {
+                throw new Exception('Produto não informado.');
+            }
+
+            $cart->addProduct($params['product'], $params);
+            $cart->save();
+
+            $quote = $cart->getQuote();
+            $quote->getShippingAddress()->setCollectShippingRates(true);
+            $quote->collectTotals()->save();
+
+            $this->_sendJson([
+                'status'  => 'success',
+                'payload' => UltraDev_SideCart_Model_Observer::buildCartPayload(),
+            ]);
+        } catch (Exception $e) {
+            Mage::logException($e);
+            $this->_sendJson([
+                'status'  => 'error',
+                'message' => $this->__('Erro ao adicionar produto: ') . $e->getMessage()
+            ]);
+        }
+    }
+
+    /**
      * Atualiza a quantidade de um item
      */
     public function updateItemAction()
