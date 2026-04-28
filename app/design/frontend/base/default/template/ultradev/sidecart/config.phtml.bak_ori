@@ -1,0 +1,31 @@
+<?php
+$helper = Mage::helper('ultradev_sidecart');
+if (!$helper->isEnabled()) return;
+?>
+<script type="text/javascript" data-cfasync="false" data-fbminify="false">
+window.UltraDevSideCartConfig = {
+    cartUrl:        '<?php echo Mage::getUrl('ultradev_sidecart/cart/index') ?>',
+    updateItemUrl:  '<?php echo Mage::getUrl('ultradev_sidecart/cart/updateItem') ?>',
+    removeItemUrl:  '<?php echo Mage::getUrl('ultradev_sidecart/cart/removeItem') ?>',
+    applyCouponUrl: '<?php echo Mage::getUrl('ultradev_sidecart/cart/applyCoupon') ?>',
+    removeCouponUrl:'<?php echo Mage::getUrl('ultradev_sidecart/cart/removeCoupon') ?>',
+    cartLinkSelector:    '<?php echo $this->helper('core')->jsQuoteEscape($helper->getCartSelector()) ?>',
+    addToCartSelector:   '<?php echo $this->helper('core')->jsQuoteEscape($helper->getAddToCartSelector()) ?>',
+    confirmRemove:  '<?php echo $this->helper('core')->jsQuoteEscape($this->__('Remove this item?')) ?>',
+    i18n: {
+        myCart:          '<?php echo $this->__('MEU') ?>',
+        cart:            '<?php echo $this->__('CARRINHO') ?>',
+        empty:           '<?php echo $this->__('Your cart is empty.') ?>',
+        continueShopping:'<?php echo $this->helper('core')->jsQuoteEscape($this->__('Continuar Comprando')) ?>',
+        remove:          '<?php echo $this->__('Excluir') ?>',
+        total:           '<?php echo $this->__('Total:') ?>',
+        discount:        '<?php echo $this->__('Discount:') ?>',
+        finalTotal:      '<?php echo $this->__('Valor Final:') ?>',
+        checkout:        '<?php echo $this->helper('core')->jsQuoteEscape($this->__('Finalizar Pedido')) ?>',
+        enterCoupon:     '<?php echo $this->helper('core')->jsQuoteEscape($this->__('Informe seu cupom')) ?>',
+        apply:           '<?php echo $this->__('Aplicar') ?>',
+        couponRemove:    '<?php echo $this->__('Excluir') ?>',
+        close:           '<?php echo $this->__('Fechar') ?>'
+    }
+};
+</script>

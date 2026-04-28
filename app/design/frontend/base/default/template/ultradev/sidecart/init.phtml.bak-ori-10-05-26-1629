@@ -1,0 +1,15 @@
+<?php
+$helper = Mage::helper('ultradev_sidecart');
+if (!$helper->isEnabled()) return;
+$jsFile = Mage::getBaseDir('skin') . DS . 'frontend' . DS . 'ultimo' . DS . 'default' . DS . 'js' . DS . 'ultradev' . DS . 'sidecart.js';
+$jsContent = file_exists($jsFile) ? file_get_contents($jsFile) : '';
+?>
+<div id="usc-overlay"></div>
+<div id="usc-panel">
+    <div id="usc-panel-inner">
+        <div class="usc-loading"><?php echo $this->__('Loading...') ?></div>
+    </div>
+</div>
+<script type="text/javascript" data-cfasync="false">
+<?php echo $jsContent ?>
+</script>
